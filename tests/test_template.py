@@ -9,6 +9,16 @@ def test_template_renders_with_defaults(tmp_path, versioned_template):
     assert (dest / ".copier-answers.yml").exists()
 
 
+def test_readme_credits_the_template(tmp_path, versioned_template):
+    dest = tmp_path / "project"
+    copier("copy", "--defaults", str(versioned_template), str(dest), cwd=tmp_path)
+    readme = (dest / "README.md").read_text()
+    assert readme.startswith("# project\n")
+    assert readme.rstrip().endswith(
+        "## Credits\n\nGenerated from [copier-gitops](https://github.com/hasansezertasan/copier-gitops)."
+    )
+
+
 def test_update_to_a_new_version_only_moves_the_answers_commit(tmp_path, versioned_template):
     dest = tmp_path / "project"
     copier("copy", "--defaults", str(versioned_template), str(dest), cwd=tmp_path)
