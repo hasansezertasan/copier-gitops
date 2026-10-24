@@ -5,6 +5,11 @@ _min_copier_version: "9.10.3"
 _templates_suffix: .jinja
 _answers_file: .copier-answers.yml
 
+# Written once, then owned by the generated project: its title is the destination folder's name,
+# which is not stable across `copier update`, and the project rewrites the text anyway.
+_skip_if_exists:
+  - README.md
+
 # Add questions for the projects this template generates, for example:
 # project_name:
 #   type: str
